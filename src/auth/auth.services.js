@@ -45,7 +45,7 @@ const postRecoveryToken = (req, res) => {
         .then((data) => {
             if(data){
                 mailer.sendMail({
-                    from: '<test.academlo@gmail.com>',
+                    from: '<ariagt191000@gmail.com>',
                     to: email,
                     subject: 'Recuperación de Contraseña',
                     html: `<a href='${config.api.host}/api/v1/auth/recovery-password/${data.id}'>${config.api.host}/api/v1/auth/recovery-password/${data.id}</a>`
@@ -66,7 +66,7 @@ const postRecoveryToken = (req, res) => {
 const patchPassword = (req, res) => {
     const id = req.params.id //? es el id del registro de recoveryPassword (para recuperar la contraseña)
     const { password } = req.body
-      
+    
     authControllers.changePassword(id, password)
         .then(data => {
             if(data){
