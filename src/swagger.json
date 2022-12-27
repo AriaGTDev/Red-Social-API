@@ -1,0 +1,811 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API - Red Social Academlo",
+    "version": "1.0.0",
+    "description": "Endpoints y funciones de esta API sencilla y escalable, ideal como base para desarrollar APIs avanzadas para proyectos más grandes."
+  },
+  "servers": [
+    {
+      "url": "https://api-red-social.onrender.com/api/v1",
+      "description": "URL Base"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          }
+        }
+      },
+      "RecoveryPassword": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          }
+        }
+      },
+      "PatchPassword": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "example": "12345"
+          }
+        }
+      },
+      "Post": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "example": "Post Text"
+          }
+        }
+      },
+      "CreateUser": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "James"
+          },
+          "nickName": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          },
+          "gender": {
+            "type": "string",
+            "example": "12345"
+          },
+          "birthday": {
+            "type": "string",
+            "example": "01/01/1991"
+          },
+          "profileImg": {
+            "type": "string",
+            "example": "img.url"
+          }
+        }
+      },
+      "EditMyUser": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "James"
+          },
+          "nickName": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "gender": {
+            "type": "string",
+            "example": "male"
+          },
+          "birthday": {
+            "type": "string",
+            "example": "01/01/1991"
+          },
+          "profileImg": {
+            "type": "string",
+            "example": "img.url"
+          }
+        }
+      },
+      "EditUser": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "James"
+          },
+          "nickName": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "gender": {
+            "type": "string",
+            "example": "12345"
+          },
+          "birthday": {
+            "type": "string",
+            "example": "01/01/1991"
+          },
+          "profileImg": {
+            "type": "string",
+            "example": "img.url"
+          },
+          "role": {
+            "type": "string",
+            "example": "normal"
+          },
+          "status": {
+            "type": "string",
+            "example": "active"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Acciones de autorización y administracion de credenciales de los usuarios."
+    },
+    {
+      "name": "posts",
+      "description": "Acciones de publicaciones, comentarios y likes."
+    },
+    {
+      "name": "users",
+      "description": "Acciones de creación de cuentas, datos personales y su edición."
+    },
+    {
+      "name": "follows",
+      "description": "Acciones de usuarios seguidores y seguidos."
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Retorna un Token JWT.",
+        "description": "Recibe credenciales de usuario para retornar el token de autorización si estas son correctas.",
+        "operationId": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Login"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/recovery-password": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Enviar correo de recuperación.",
+        "description": "Recibe el correo de un usuario y envía un correo con el link de recuperación.",
+        "operationId": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecoveryPassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryPassword"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/recovery-password/{token}": {
+      "patch": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Cambiar contraseña.",
+        "description": "Permite establecer una nueva contraseña para una cuenta de usuario.",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "description": "Token de recuperación enviado al correo.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchPassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PatchPassword"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts": {
+      "get": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Obtiene todas las publicaciones.",
+        "description": "Obtiene todas las publicaciones de la base de datos.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Crear publicación.",
+        "description": "Ingresa datos para crear una nueva publicación.",
+        "operationId": "",
+        "security": [
+          {
+            "ApiKeyAuth": [
+              "Authorization"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts/{postId}": {
+      "get": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Obtiene una publicación.",
+        "description": "Obtiene una publicación con su ID.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "description": "ID del post a obtener.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Edita una publicación.",
+        "description": "Modifica algunos datos de la publicación según su ID.",
+        "operationId": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "description": "ID del post a modificar.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": [
+              "Authorization"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Elimina una publicación.",
+        "description": "Elimina una publicación con su ID.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "description": "ID del post a eliminar.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": [
+              "Authorization"
+            ]
+          }
+        ]
+      }
+    },
+    "/posts/{postId}/likes": {
+      "get": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Obtiene los likes de una publicación.",
+        "description": "Obtiene los likes de  una publicación con su ID.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "description": "ID del post del cual se quiere ver los likes.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Añade un like a una publicación.",
+        "description": "Añade un like a una publicación según su ID.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "description": "ID del post a dar like.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": [
+              "JWT"
+            ]
+          }
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Obtener usuarios.",
+        "description": "Obtienes todos los usuarios dentro de la base de datos.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Crear usuario.",
+        "description": "Crea un nuevo usuario dentro de la base de datos.",
+        "operationId": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUser"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Obtener mi usuario.",
+        "description": "Obtienes tu usuario siempre y cuando tengas el Token JWT en el header.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": [
+              "Authorization"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Editar mi usuario.",
+        "description": "Editas datos de tu usuario siempre y cuando tengas el Token JWT en el header.",
+        "operationId": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditMyUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditMyUser"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": [
+              "Authorization"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Eliminar mi usuario.",
+        "description": "Eliminas tu usuario siempre y cuando tengas el Token JWT en el header.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": [
+              "Authorization"
+            ]
+          }
+        ]
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Obtener un usuario.",
+        "description": "Obtienes los datos de un usuario segun el ID.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID del usuario.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Editar usuario (Admin).",
+        "description": "Editas datos del usuario Logeado (Token JWT de Auth).",
+        "operationId": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditUser"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID del usuario a modificar sus datos.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": [
+              "Authorization"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Eliminar usuario (Admin).",
+        "description": "Eliminas un usuario siempre y cuando tengas el Token JWT en el header y tengas rol de administrador.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID del usuario a modificar sus datos.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": [
+              "Authorization"
+            ]
+          }
+        ]
+      }
+    },
+    "/users/{userId}/follow": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Seguir a un usuario.",
+        "description": "Seguir a un usuario según su ID.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID del usuario a seguir.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": [
+              "Authorization"
+            ]
+          }
+        ]
+      }
+    },
+    "/followers": {
+      "get": {
+        "tags": [
+          "follows"
+        ],
+        "summary": "Obtener mis seguidos.",
+        "description": "Permite recibir todos los usuarios seguidos de un usuario.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Array de usuarios seguidos."
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": [
+              "Authorization"
+            ]
+          }
+        ]
+      }
+    },
+    "/follows": {
+      "get": {
+        "tags": [
+          "follows"
+        ],
+        "summary": "Obtener mis seguidores.",
+        "description": "Permite recibir todos los seguidores de un usuario.",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Array de usuarios que te siguieron."
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": [
+              "Authorization"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
