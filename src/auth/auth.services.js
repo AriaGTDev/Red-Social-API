@@ -20,7 +20,7 @@ const postLogin = (req, res) => {
 
                     res.status(200).json({
                         message: 'Correct Credentials!',
-                        token
+                        token: `JWT ${token}`
                     })
                 } else {
                     res.status(401).json({message: 'Invalid Credentials'})

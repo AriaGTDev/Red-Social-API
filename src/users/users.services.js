@@ -70,9 +70,9 @@ const postUser = (req, res) => {
 //? Solo admins pueden ejecutarlo
 const patchUser = (req, res) => {
     const id = req.params.id 
-    const {firstName, lastName, email, gender, birthday, profileImg, role, status} = req.body
+    const {firstName, lastName, nickName, email, gender, birthday, profileImg, role, status} = req.body
 
-    userControllers.updateUser(id, {firstName, lastName, email, gender, birthday, profileImg, role, status})
+    userControllers.updateUser(id, {firstName, lastName, nickName, email, gender, birthday, profileImg, role, status})
         .then((data) =>{
             if(data){
                 res.status(200).json({message: `User edited succesfully with id: ${id}`})
@@ -87,8 +87,8 @@ const patchUser = (req, res) => {
 
 const patchMyUser = (req, res) => {
     const id = req.user.id
-    const { firstName, lastName, gender, birthday, profileImg } = req.body
-    userControllers.updateUser(id, {firstName, lastName, gender, birthday, profileImg})
+    const { firstName, lastName, nickName, gender, birthday, profileImg } = req.body
+    userControllers.updateUser(id, {firstName, lastName, nickName, gender, birthday, profileImg})
         .then(() => {
             res.status(200).json({message: 'Your user was edited succesfully!'})
         })
