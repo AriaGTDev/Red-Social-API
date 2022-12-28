@@ -3,7 +3,7 @@
   "info": {
     "title": "API - Red Social Academlo",
     "version": "1.0.0",
-    "description": "Endpoints y funciones de esta API sencilla y escalable, ideal como base para desarrollar APIs avanzadas para proyectos más grandes."
+    "description": "\nEndpoints y funciones de esta API sencilla y escalable, ideal como base para desarrollar APIs avanzadas para proyectos más grandes.\n\nRepositorio en GitHub: [github.com/AriaGTDev/Red-Social-API](https://github.com/AriaGTDev/Red-Social-API)\n\n<strong>Recomendación de Uso:</strong>\n\n - *Crear un usuario desde users y recordar el email y la contraseña.*\n - *Iniciar sesión desde auth y copiar el token que se encontrará en el Response Body.*\n - *Entrar en el apartado de Authorize 🔒 e ingresar el token para poder testear las rutas protegidas.*"
   },
   "servers": [
     {
