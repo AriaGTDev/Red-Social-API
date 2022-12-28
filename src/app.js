@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
         status: 200,
         message: 'Ok!',
         routes: {
-            users: ""
+            documentation: 'https://api-red-social.onrender.com/api/v1/docs/',
         }
     })
 })
